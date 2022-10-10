@@ -21,9 +21,9 @@ namespace MemberRegister.Core.Dto
 
         public string Postaladdress { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public string CreationDate { get; set; }
 
-        public DateTime LastUpdatedDate { get; set; }
+        public string LastUpdatedDate { get; set; }
 
         public override string ToString()
         {
@@ -41,10 +41,10 @@ namespace MemberRegister.Core.Dto
             strBuild.Append(this.Postaladdress);
 
             strBuild.Append(System.Environment.NewLine);
-            strBuild.Append("Creation date: " + this.CreationDate.ToShortDateString());
+            strBuild.Append("Creation date: " + this.CreationDate);
 
             strBuild.Append(System.Environment.NewLine);
-            strBuild.Append("Latest update date: " + this.LastUpdatedDate.ToShortDateString());
+            strBuild.Append("Latest update date: " + this.LastUpdatedDate);
 
             return strBuild.ToString();
         }

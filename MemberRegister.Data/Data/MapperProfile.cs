@@ -7,8 +7,10 @@ namespace MemberRegister.Data.Data
     public class MapperProfile : Profile
     {
         public MapperProfile() {
-            CreateMap<Member, MemberDto>().ReverseMap();
-            //CreateMap<Member, MemberDto>().ForMember(dest => dest.CreationDate, from => from.MapFrom(d =>d.CreationDate.ToShortDateString()));
+            //CreateMap<Member, MemberDto>().ReverseMap();
+            CreateMap<Member, MemberDto>()
+                .ForMember(dest => dest.LastUpdatedDate, from => from.MapFrom(d => d.LastUpdatedDate.ToShortDateString()))
+                .ForMember(dest => dest.CreationDate, from => from.MapFrom(d => d.CreationDate.ToShortDateString()));
             //CreateMap<Member, MemberDto>().ForMember(dest => dest.LastUpdatedDate, from => from.MapFrom(d => d.LastUpdatedDate.ToShortDateString()));
         }
     }
