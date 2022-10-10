@@ -145,11 +145,13 @@ namespace MemberRegister.Api.Controllers
             if (memberDto == null)
                 return BadRequest("No information about member in the request");
 
-            if (!ModelState.IsValid)
-                return BadRequest("Invalid model");
-
             try
             {
+                // Fix. If we dont get a correct date from client. Set to temp date. We change this in the repository
+                string strDtNow = DateTime.Now.ToString();
+                memberDto.CreationDate = strDtNow;
+                memberDto.LastUpdatedDate = strDtNow;
+
                 Member member = m_Mapper.Map<Member>(memberDto);
                 bool bIsSaveOk = await this.m_MemberRegisterService.CreateMemberAsync(member);
 
@@ -191,6 +193,11 @@ namespace MemberRegister.Api.Controllers
 
             try 
             {
+                // Fix. If we dont get a correct date from client. Set to temp date. We change this in the repository
+                string strDtNow = DateTime.Now.ToString();
+                memberDto.CreationDate = strDtNow;
+                memberDto.LastUpdatedDate = strDtNow;
+
                 Member member = m_Mapper.Map<Member>(memberDto);
                 bool bIsUpdateOk = await this.m_MemberRegisterService.UpdateMemberAsync(id, member);
 

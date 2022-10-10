@@ -78,18 +78,18 @@ namespace MemberRegister.Data.Repositories
         /// <returns>IEnumerable with members</returns>
         public async Task<IEnumerable<Member>> GetMembersAsync()
         {
-            return await m_Context.Member.ToListAsync();
+            return await m_Context.Member.AsNoTracking().ToListAsync();
         }
 
 
         /// <summary>
         /// Method return member with id
         /// </summary>
-        /// <param name="id">Id for m ember we search for</param>
+        /// <param name="id">Id for member we search for</param>
         /// <returns>Member</returns>
         public async Task<Member> GetMemberAsync(int id)
         {
-            return await m_Context.Member.FirstOrDefaultAsync(m => m.Id == id);
+            return await m_Context.Member.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
         }
 
 
@@ -105,7 +105,15 @@ namespace MemberRegister.Data.Repositories
             if (member == null)
                 throw new ArgumentNullException($"{nameof(MemberRegisterRepository)}->UpdateMemberAsync(). Reference to member is null");
 
-            member.LastUpdatedDate = DateTime.Now;
+            DateTime dtNow = DateTime.Now;
+            member.CreationDate = dtNow;
+            member.LastUpdatedDate = dtNow;
+
+            var oldMember = await m_Context.Member.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
+
+            // We should always have a old member
+            if (oldMember != null)
+                member.CreationDate = oldMember.CreationDate;
 
             m_Context.Member.Update(member);
 

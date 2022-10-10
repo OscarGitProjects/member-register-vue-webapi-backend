@@ -11,7 +11,8 @@ namespace MemberRegister.Data.Data
             CreateMap<Member, MemberDto>()
                 .ForMember(dest => dest.LastUpdatedDate, from => from.MapFrom(d => d.LastUpdatedDate.ToShortDateString()))
                 .ForMember(dest => dest.CreationDate, from => from.MapFrom(d => d.CreationDate.ToShortDateString()));
-            //CreateMap<Member, MemberDto>().ForMember(dest => dest.LastUpdatedDate, from => from.MapFrom(d => d.LastUpdatedDate.ToShortDateString()));
+
+            CreateMap<MemberDto, Member>();
         }
     }
 }
