@@ -4,6 +4,7 @@ using MemberRegister.Core.Dto;
 using MemberRegister.Core.Entities;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.NetworkInformation;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,7 +24,7 @@ namespace MemberRegister.Api.Controllers
         /// <summary>
         /// Reference to automapper
         /// </summary>
-        public readonly IMapper m_Mapper;
+        private readonly IMapper m_Mapper;
 
         /// <summary>
         /// Reference to a logger
@@ -46,7 +47,7 @@ namespace MemberRegister.Api.Controllers
 
 
         /// <summary>
-        /// GET: api/<MemberController>
+        /// GET: api/<MemberController>/GetMembers
         /// Get all members
         /// </summary>
         /// <returns>Ok = 200. List with members</returns>
@@ -87,7 +88,7 @@ namespace MemberRegister.Api.Controllers
 
 
         /// <summary>
-        /// GET api/<MemberController>/5
+        /// GET api/<MemberController>/GetMember/5
         /// Get a member
         /// </summary>
         /// <param name="id">id for member</param>
@@ -127,7 +128,7 @@ namespace MemberRegister.Api.Controllers
 
 
         /// <summary>
-        /// POST api/<MemberController>
+        /// POST api/<MemberController>/CreateMember
         /// Create a new member
         /// </summary>
         /// <param name="memberDto">Object with information about the new member</param>
@@ -169,7 +170,7 @@ namespace MemberRegister.Api.Controllers
 
 
         /// <summary>
-        /// PUT api/<MemberController>/5
+        /// PUT api/<MemberController>/UpdateMember/5
         /// Update information about a member
         /// </summary>
         /// <param name="id">Id for member</param>
@@ -215,7 +216,7 @@ namespace MemberRegister.Api.Controllers
 
 
         /// <summary>
-        /// DELETE api/<MemberController>/5
+        /// DELETE api/<MemberController>/DeleteMember/5
         /// Delete a member
         /// </summary>
         /// <param name="id">Id for member that we want to delete</param>
@@ -243,12 +244,32 @@ namespace MemberRegister.Api.Controllers
         }
 
 
+        /// <summary>
+        /// Get api/<MemberController>/Ping
+        /// Return date and time
+        /// </summary>
+        /// <returns>Date abd time as a string</returns>
+        /// <response code="200">If we updated information about a member</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet("Ping")]
+        public async Task<ActionResult> Ping()
+        {
+            return Ok(DateTime.Now.ToString());
+        }
+
+
+        /// <summary>
+        /// Get api/<MemberController>/GetCoffe
+        /// </summary>
+        /// <returns>Statuscode 418. I am a teapot</returns>
+        /// <response code="418">418 I'm a teapot</response>
+        [ProducesResponseType(StatusCodes.Status418ImATeapot)]
         [HttpGet("GetCoffe")]
         public async Task<ActionResult> BrewCoffe()
         {
             // 418 I'm a teapot
             // The server refuses the attempt to brew coffee with a teapot.
-            return StatusCode(418);
+            return StatusCode(418, "I'm a teapot");
         }
     }
 }
