@@ -248,8 +248,8 @@ namespace MemberRegister.Api.Controllers
         /// Get api/<MemberController>/Ping
         /// Return date and time
         /// </summary>
-        /// <returns>Date abd time as a string</returns>
-        /// <response code="200">If we updated information about a member</response>
+        /// <returns>Date and time as a string</returns>
+        /// <response code="200">Ok and date and time as a string</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("Ping")]
         public async Task<ActionResult> Ping()
